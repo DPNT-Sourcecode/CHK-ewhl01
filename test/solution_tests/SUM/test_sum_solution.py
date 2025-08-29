@@ -21,6 +21,3 @@ class TestSum():
         except ValueError:
             assert True
         
-
-
-
