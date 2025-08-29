@@ -28,4 +28,3 @@ class TestHello:
             assert False, "Expected ValueError for non-string input"
         except ValueError:
             assert True
-
