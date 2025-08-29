@@ -14,4 +14,4 @@ class HelloSolution:
         if not friend_name.strip():
             raise ValueError("Parameter 'friend_name' cannot be empty")
         
-        return f"Hello {friend_name}"
+        return f"Hello, {friend_name}!"
