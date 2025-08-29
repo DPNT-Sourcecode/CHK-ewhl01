@@ -14,6 +14,13 @@ class TestSum():
     def test_sum_lower_bound(self):
         assert SumSolution().compute(0, 0) == 0
 
+    def test_sum_invalid_input(self):
+        try:
+            SumSolution().compute(-1, 5)
+            assert False, "Expected ValueError for negative input"
+        except ValueError:
+            assert True
         
+
 
 
