@@ -71,6 +71,13 @@ class CheckoutSolution:
             if "B" in counts:
                 counts["B"] = max(0, counts["B"] - free_bs)
 
+
+        # 3N -> 1M free
+        if "N" in counts and counts["N"] >= 3:
+            free_ms = counts["N"] // 3
+            if "M" in counts:
+                counts["M"] = max(0, counts["M"] - free_ms)
+
         # F deal: buy 2F, get 1F free (so pay for only 2 of every 3), only works if at least 3 Fs, but if less than 3, still pay for 2
         if "F" in counts:
             groups_of_three = counts["F"] // 3
@@ -84,6 +91,13 @@ class CheckoutSolution:
             if "Q" in counts:
                 counts["Q"] = max(0, counts["Q"] - free_qs)
 
+        # U: 3U get 1U free => for every 4U pay for 3
+        if "U" in counts:
+            groups = counts["U"] // 4
+            remainder = counts["U"] % 4
+            total += groups * 3 * prices["U"]
+            counts["U"] = remainder
+
         # apply offers
         for item, count in counts.items():
             if item in offers:
@@ -96,8 +110,3 @@ class CheckoutSolution:
                 total += count * prices[item]
 
         return total
-
-
-
-
-
