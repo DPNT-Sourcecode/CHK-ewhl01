@@ -45,6 +45,13 @@ class CheckoutSolution:
             if "B" in counts:
                 counts["B"] = max(0, counts["B"] - free_bs)
 
+        # F deal: buy 2F, get 1F free (so pay for only 2 of every 3), only works if at least 3 Fs
+        if "F" in counts and counts["F"] >= 3:
+            groups_of_three = counts["F"] // 3
+            remainder = counts["F"] % 3
+            total += groups_of_three * 2 * prices["F"]
+            counts["F"] = remainder
+
         # apply offers
         for item, count in counts.items():
             if item in offers:
@@ -54,7 +61,10 @@ class CheckoutSolution:
                     count %= qty
                 total += count * prices[item]
             else:
-                total += count * prices[item]
+                # ignore F here, as already handled it
+                if item != "F":
+                    total += count * prices[item]
 
         return total
+
 
