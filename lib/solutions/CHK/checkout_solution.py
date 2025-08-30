@@ -25,7 +25,7 @@ class CheckoutSolution:
 
         offers = {
             "A": [(5, 200), (3, 130)], # 5 for 200, 3 for 130
-            "B": (2, 45),   # 2 Bs for 45
+            "B": [(2, 45)],   # 2 Bs for 45
         }
 
         # count up each item
@@ -37,14 +37,25 @@ class CheckoutSolution:
 
         # work out total with offers
         total = 0
+
+        # handle B freebies from Es
+        if "E" in counts and counts["E"] >= 2:
+            free_bs = counts["E"] // 2
+            if "B" in counts:
+                counts["B"] = max(0, counts["B"] - free_bs)
+
+        # apply offers
         for item, count in counts.items():
             if item in offers:
-                offer_qty, offer_price = offers[item]
-                total += (count // offer_qty) * offer_price
-                total += (count % offer_qty) * prices[item]
+                for qty, offer_price in offers[item]:
+                    num_offers = count // qty
+                    total += num_offers * offer_price
+                    count %= qty
+                total += count * prices[item]
             else:
                 total += count * prices[item]
 
         return total
+
 
 
