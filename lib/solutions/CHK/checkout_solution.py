@@ -17,11 +17,14 @@ class CheckoutSolution:
             "B": 30,
             "C": 20,
             "D": 15,
+            "E": 40,
         }
 
         # deals on some items
+        # for multi-price offers we put them in a list, biggest deal first
+
         offers = {
-            "A": (3, 130),  # 3 As for 130
+            "A": [(5, 200), (3, 130)], # 5 for 200, 3 for 130
             "B": (2, 45),   # 2 Bs for 45
         }
 
@@ -43,4 +46,5 @@ class CheckoutSolution:
                 total += count * prices[item]
 
         return total
+
 
