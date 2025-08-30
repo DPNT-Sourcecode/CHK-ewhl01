@@ -46,8 +46,13 @@ class CheckoutSolution:
         # for multi-price offers we put them in a list, biggest deal first
 
         offers = {
-            "A": [(5, 200), (3, 130)], # 5 for 200, 3 for 130
-            "B": [(2, 45)],   # 2 Bs for 45
+            "A": [(5, 200), (3, 130)],
+            "B": [(2, 45)],
+            "H": [(10, 80), (5, 45)],
+            "K": [(2, 150)],
+            "P": [(5, 200)],
+            "Q": [(3, 80)],
+            "V": [(3, 130), (2, 90)],
         }
 
         # count up each item
@@ -73,6 +78,12 @@ class CheckoutSolution:
             total += groups_of_three * 2 * prices["F"]
             counts["F"] = remainder
 
+        # 3R -> 1Q free
+        if "R" in counts and counts["R"] >= 3:
+            free_qs = counts["R"] // 3
+            if "Q" in counts:
+                counts["Q"] = max(0, counts["Q"] - free_qs)
+
         # apply offers
         for item, count in counts.items():
             if item in offers:
@@ -85,6 +96,7 @@ class CheckoutSolution:
                 total += count * prices[item]
 
         return total
+
 
 
 
