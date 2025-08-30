@@ -31,7 +31,7 @@ class CheckoutSolution:
             "P": 50,
             "Q": 30,
             "R": 50,
-            "S": 20,
+            "S": 30,
             "T": 20,
             "U": 40,
             "V": 50,
@@ -110,3 +110,4 @@ class CheckoutSolution:
                 total += count * prices[item]
 
         return total
+

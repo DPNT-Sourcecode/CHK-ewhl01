@@ -38,6 +38,8 @@ class TestCheckoutRound4:
         assert CheckoutSolution().checkout("KK") == 150
 
     def test_offer_on_v(self):
+        # 2V = 90 (offer)
+        assert CheckoutSolution().checkout("VV") == 90
         # 3V = 130
         assert CheckoutSolution().checkout("VVV") == 130
 
@@ -45,6 +47,21 @@ class TestCheckoutRound4:
         # 3N gives 1M free
         assert CheckoutSolution().checkout("NNNM") == 120
 
+    def test_offer_on_p(self):
+        # 5P = 200 (offer)
+        assert CheckoutSolution().checkout("P"*5) == 200
+
+    def test_offer_on_q(self):
+        # 3Q = 80 (offer)
+        assert CheckoutSolution().checkout("Q"*3) == 80
+
+    def test_cross_offer_r_and_q(self):
+        # 3R = 150, Q is free
+        # Basket "RRRQ" should cost 150
+        assert CheckoutSolution().checkout("RRRQ") == 150
+
+
     def test_self_offer_u(self):
         # 4U -> pay for 3 = 120
         assert CheckoutSolution().checkout("UUUU") == 120
+
