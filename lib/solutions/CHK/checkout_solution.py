@@ -23,7 +23,7 @@ class CheckoutSolution:
             "H": 10,
             "I": 35,
             "J": 60,
-            "K": 80,
+            "K": 70,   # updated
             "L": 90,
             "M": 15,
             "N": 40,
@@ -31,15 +31,14 @@ class CheckoutSolution:
             "P": 50,
             "Q": 30,
             "R": 50,
-            "S": 30,
-            "T": 20,
+            "S": 20,   # in group deal
+            "T": 20,   # in group deal
             "U": 40,
             "V": 50,
             "W": 20,
-            "X": 90,
-            "Y": 10,
-            "Z": 50,
-
+            "X": 17,   # updated, in group deal
+            "Y": 20,   # in group deal
+            "Z": 21,   # updated, in group deal
         }
 
         # deals on some items
@@ -49,7 +48,7 @@ class CheckoutSolution:
             "A": [(5, 200), (3, 130)],
             "B": [(2, 45)],
             "H": [(10, 80), (5, 45)],
-            "K": [(2, 150)],
+            "K": [(2, 120)], # updated
             "P": [(5, 200)],
             "Q": [(3, 80)],
             "V": [(3, 130), (2, 90)],
@@ -98,6 +97,20 @@ class CheckoutSolution:
             total += groups * 3 * prices["U"]
             counts["U"] = remainder
 
+
+        # group offer: any 3 of (S,T,X,Y,Z) for 45
+        group_items = ["S", "T", "X", "Y", "Z"]
+        group_prices = []
+        for g in group_items:
+            if g in counts:
+                group_prices += [prices[g]] * counts[g]
+                counts[g] = 0
+        group_prices.sort(reverse=True)  # take priciest first
+        groups = len(group_prices) // 3
+        total += groups * 45
+        remainder = group_prices[groups * 3:]
+        total += sum(remainder)
+
         # apply offers
         for item, count in counts.items():
             if item in offers:
@@ -110,4 +123,5 @@ class CheckoutSolution:
                 total += count * prices[item]
 
         return total
+
 
